@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css" />
+
+
+<body id="body" >
+
+    <div class="container  mt-5">
+        <div class=" col-sm-8 offset-sm-2 col-lg-6  offset-lg-3 shadow-lg">
+            <form name="myform" id="form" action="#" class="  my-2 " onsubmit="return validateForm()">
+                <h1 class="text-center fw-bolder text-danger pt-2 pb-3">Sign Up</h1>
+                <div class="col-lg-10 ms-5 ">
+                    <label for="Name" class="form-label">Name</label>
+                    <input type="text" class="form-control " name="fname" placeholder="Enter Your Name">
+                    <br>
+                    <span class="text-danger" id="error"></span>
+                </div>
+                <div class="col-lg-10 ms-5  ">
+                    <label for="Email" class="form-label">Email</label>
+                    <input type="Email" class="form-control" id="gmail" name="fgmail" placeholder="Enter Your Email">
+                    <br>
+                    <span class="text-danger" id="emailerror"></span>
+                </div>
+                <div class="col-lg-10 ms-5  ">
+                    <label for="inputPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="fpass" placeholder="Password (at least 6 characters)" minlength="6">
+                    <br>
+                    <span class="text-danger" id="p"></span>
+                </div>
+                <div class="col-lg-10 ms-5 mt-2 pb-3 ">
+                    <button type="submit" class="btn btn-primary w-40 offset-3">Sign Up</button>
+                    <a href="log-in.html" class="btn btn-outline-primary w-40">Login</a>
+                    <a href="home.html" class="ms-3">Back To HomePage<i class="fa-solid fa-rotate-left" style="color: #FFD43B;"></i></a>
+                </div>
+               
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+</body>
+
+</html>

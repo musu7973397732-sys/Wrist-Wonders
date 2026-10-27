@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>My Orders - Wrist Wonders</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .order-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: #ffffff;
+            margin-bottom: 24px;
+        }
+        .order-card:hover {
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+        .order-header {
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 20px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .order-item-img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #edf2f7;
+        }
+    </style>
+</head>
+
+<body id="body" class="bg-light">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: black;">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="home.html">
+                <img src="logo.png" id="logo" style="height: 40px;" onerror="this.style.display='none'">
+                <h3 class="text-white fw-bolder display-6 ms-2 m-0 fs-3">
+                    <super>WRIST</super><sub> WONDERS<i class="fa-solid fa-clock ms-1" style="color: white;"></i></sub>
+                </h3>
+            </a>
+            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto me-3 mb-2 mb-lg-0 fw-bolder align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                            Categories
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="Smart .html">Smart Watches</a>
+                            <a class="dropdown-item" href="analog.html">Analog Watches</a>
+                            <a class="dropdown-item" href="Mens.html">Men's Watches</a>
+                            <a class="dropdown-item" href="Womens.html">Women's Watches</a>
+                            <a class="dropdown-item" href="kids.html">Kids' Watches</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="accessiores.html">Accessories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="QUERY.HTML">Query</a>
+                    </li>
+                    <!-- Cart Link -->
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-warning text-dark fw-bold d-flex align-items-center px-3" href="cart.html">
+                            <i class="fa-solid fa-cart-shopping me-2"></i> Cart
+                            <span class="badge bg-danger ms-2 cart-count-badge">0</span>
+                        </a>
+                    </li>
+                    <!-- Auth Section -->
+                    <li class="nav-item ms-2" id="nav-auth-container">
+                        <a class="nav-link text-white" href="sign up.html"><i class="fa-solid fa-user" style="color: white;"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+            <div>
+                <h1 class="fw-bolder text-dark m-0"><i class="fa-solid fa-bag-shopping text-danger me-2"></i>My Order History</h1>
+                <p class="text-muted m-0 mt-1" id="order-user-subtitle">View and track all your watch purchases.</p>
+            </div>
+            <a href="home.html" class="btn btn-outline-dark"><i class="fa-solid fa-arrow-left me-1"></i> Continue Shopping</a>
+        </div>
+
+        <!-- Orders Container -->
+        <div id="orders-list-container">
+            <div class="text-center py-5">
+                <div class="spinner-border text-danger" role="status"></div>
+                <p class="text-muted mt-2">Loading your orders...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('orders-list-container');
+            const subtitle = document.getElementById('order-user-subtitle');
+            const user = Auth.getUser();
+
+            if (!user) {
+                container.innerHTML = `
+                    <div class="card p-5 text-center shadow-sm border-0 my-4" style="border-radius: 16px;">
+                        <div class="mb-3">
+                            <i class="fa-solid fa-lock fa-3x text-warning"></i>
+                        </div>
+                        <h3 class="fw-bold text-dark">Please Sign In to View Your Orders</h3>
+                        <p class="text-muted">You must be logged in to view your order history and tracking details.</p>
+                        <div class="mt-3">
+                            <a href="log-in.html" class="btn btn-primary px-4 py-2 me-2">Log In</a>
+                            <a href="sign up.html" class="btn btn-outline-primary px-4 py-2">Sign Up</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            subtitle.textContent = `Showing orders for ${user.name} (${user.email})`;
+
+            try {
+                const res = await fetch(`/api/orders/user/${encodeURIComponent(user.email)}`);
+                const data = await res.json();
+
+                if (!data.success || !data.orders || data.orders.length === 0) {
+                    container.innerHTML = `
+                        <div class="card p-5 text-center shadow-sm border-0 my-4" style="border-radius: 16px;">
+                            <div class="mb-3">
+                                <i class="fa-solid fa-cart-arrow-down fa-3x text-muted"></i>
+                            </div>
+                            <h3 class="fw-bold text-dark">No Orders Placed Yet</h3>
+                            <p class="text-muted">You haven't bought any watches yet. Browse our latest collection and treat yourself!</p>
+                            <div class="mt-3">
+                                <a href="home.html" class="btn btn-danger px-4 py-2">Explore Watches</a>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Render orders
+                container.innerHTML = data.orders.map(order => {
+                    const orderDate = new Date(order.createdAt).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    const itemsHtml = order.items.map(item => `
+                        <div class="d-flex align-items-center py-3 border-bottom">
+                            <img src="${item.image || item.imageUrl || 'logo.png'}" class="order-item-img me-3" alt="${escapeHtml(item.name)}" onerror="this.src='logo.png'">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-bold mb-1 text-dark">${escapeHtml(item.name)}</h6>
+                                <div class="text-muted small">Qty: ${item.quantity || 1} &bull; Price: Rs. ${Number(item.price).toLocaleString()}</div>
+                            </div>
+                            <div class="fw-bold fs-6 text-dark">
+                                Rs. ${(Number(item.price) * (item.quantity || 1)).toLocaleString()}
+                            </div>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <div class="order-card">
+                            <div class="order-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                <div>
+                                    <div class="small text-muted text-uppercase fw-bold">Order #${order._id.substring(order._id.length - 8)}</div>
+                                    <div class="small text-muted">Placed on: ${orderDate}</div>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="badge bg-success py-2 px-3 fs-7"><i class="fa-solid fa-circle-check me-1"></i> ${order.status || 'Confirmed'}</span>
+                                    <div class="fw-bolder fs-5 text-danger">Rs. ${Number(order.totalAmount).toLocaleString()}</div>
+                                </div>
+                            </div>
+                            <div class="p-3 px-4">
+                                ${itemsHtml}
+                                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 text-muted small">
+                                    <div><i class="fa-solid fa-location-dot me-1 text-danger"></i> Shipping To: <strong>${escapeHtml(order.shippingAddress || 'Customer Address')}</strong></div>
+                                    <div class="text-success fw-bold"><i class="fa-solid fa-truck-fast me-1"></i> Delivery in 3-5 Business Days</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                container.innerHTML = `
+                    <div class="alert alert-danger text-center">
+                        Failed to fetch order history: ${err.message}
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+#logo {
+    height: 5vw;
+}
+
+#c1 img {
+    
+    height: 45vw;
+
+}
+
+#image1 {
+
+    border-radius: 60%;
+    height: 10vw;
+
+}
+
+#container1 {
+    height: 15vw;
+    
+}
+
+#f1 img {
+    height: 15vw;
+    
+}
+
+#f2 img {
+    height: 15vw;
+    
+}
+
+#twobrands img{
+ height: 25vw;
+ width: 100%;
+}
+#Categories img{
+    height: 30vw;
+    width: 30vw;
+
+}
+/*smart */
+#carouselExampleCaptions1{
+    height: 20vw;
+}
+
+#carouselExampleCaptions1 img{
+    height: 20vw;
+}
+.btn-up {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    color: white;
+    background-color:red;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    text-decoration: none;
+  }
